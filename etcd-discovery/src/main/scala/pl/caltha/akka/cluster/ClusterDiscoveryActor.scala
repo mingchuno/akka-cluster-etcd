@@ -32,7 +32,9 @@ class ClusterDiscoveryActor(
   private implicit val executor = context.system.dispatcher
 
   def etcd(operation: EtcdClient ⇒ Future[EtcdResponse]) =
-    operation(etcdClient).pipeTo(self)
+    operation(etcdClient).recover {
+      case ex: EtcdError ⇒ ex
+    }.pipeTo(self)
 
   val seedList = context.actorOf(SeedListActor.props(etcdClient, settings))
 

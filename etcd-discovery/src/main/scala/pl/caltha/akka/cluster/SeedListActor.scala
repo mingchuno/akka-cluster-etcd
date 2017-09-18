@@ -22,7 +22,9 @@ class SeedListActor(
   private implicit val executionContext = context.dispatcher
 
   private def etcd(operation: EtcdClient ⇒ Future[EtcdResponse]) =
-    operation(etcdClient).pipeTo(self)
+    operation(etcdClient).recover {
+      case ex: EtcdError ⇒ ex
+    }.pipeTo(self)
 
   private def retryMsg(msg: Any): Unit =
     context.system.scheduler.scheduleOnce(settings.etcdRetryDelay) {

@@ -38,7 +38,9 @@ class LeaderEntryActor(
       value     = address,
       ttl       = Some(settings.leaderEntryTTL.toSeconds.asInstanceOf[Int]),
       prevValue = Some(address),
-      prevExist = Some(true)).pipeTo(self)
+      prevExist = Some(true)).recover {
+        case ex: EtcdError ⇒ ex
+      }.pipeTo(self)
 
   /**
     * Create the leader entry, assuming it does not exist.
@@ -52,7 +54,9 @@ class LeaderEntryActor(
       key       = settings.leaderPath,
       value     = address,
       ttl       = Some(settings.leaderEntryTTL.toSeconds.asInstanceOf[Int]),
-      prevExist = Some(false)).pipeTo(self)
+      prevExist = Some(false)).recover {
+        case ex: EtcdError ⇒ ex
+      }.pipeTo(self)
 
   when(Idle) {
     case Event(StateTimeout, Data(assumeEntryExists)) ⇒

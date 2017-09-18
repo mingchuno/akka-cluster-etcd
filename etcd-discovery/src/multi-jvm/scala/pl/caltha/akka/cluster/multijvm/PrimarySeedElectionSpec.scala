@@ -50,7 +50,7 @@ abstract class PrimarySeedElectionSpec(multiNodeConfig: PrimarySeedElectionMulti
   "ClusterDiscoveryExtension" should "bootstrap a cluster" in {
     Cluster(system).subscribe(testActor, classOf[MemberUp])
     expectMsgClass(classOf[CurrentClusterState])
-    Thread.sleep(Random.nextInt(1000)) //add some randomenss to when the joins happen
+    Thread.sleep(Random.nextInt(1000)) //add some randomness to when the joins happen
     ClusterDiscovery(system).start()
 
     expectMsgClass(10.seconds, classOf[MemberUp])
