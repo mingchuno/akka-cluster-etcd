@@ -14,9 +14,8 @@ import me.maciejb.etcd.client.EtcdNode
 import me.maciejb.etcd.client.EtcdResponse
 
 class SeedListActor(
-  etcdClient: EtcdClient,
-  settings:   ClusterDiscoverySettings)
-    extends FSM[SeedListActor.State, SeedListActor.Data] with Stash {
+    etcdClient: EtcdClient,
+    settings:   ClusterDiscoverySettings) extends FSM[SeedListActor.State, SeedListActor.Data] with Stash {
 
   import SeedListActor._
 

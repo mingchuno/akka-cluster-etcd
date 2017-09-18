@@ -1,35 +1,21 @@
 package pl.caltha.akka.cluster
 
-import scala.concurrent.Future
-import scala.concurrent.duration.DurationInt
-import org.mockito.Mockito
-
-import org.scalatest.Finders
-import org.scalatest.FlatSpecLike
-import org.scalatest.Matchers
-import org.scalatest.mock.MockitoSugar
-
-import akka.actor.ActorSystem
 import akka.actor.Address
-import akka.actor.FSM.CurrentState
 import akka.actor.FSM.SubscribeTransitionCallBack
-import akka.actor.FSM.Transition
 import akka.cluster.Cluster
 import akka.cluster.ClusterEvent._
 import akka.stream.StreamTcpException
 import akka.testkit.TestFSMRef
-import akka.testkit.TestKit
-import akka.testkit.TestProbe
+import me.maciejb.etcd.client.{EtcdError, EtcdNode, EtcdResponse}
+import org.mockito.Mockito
 
-import me.maciejb.etcd.client.EtcdClient
-import me.maciejb.etcd.client.EtcdNode
-import me.maciejb.etcd.client.EtcdResponse
-import me.maciejb.etcd.client.EtcdError
+import scala.concurrent.Future
+import scala.concurrent.duration.DurationInt
 
 class ClusterDiscoveryActorSpec extends EtcdFSMSpecBase[ClusterDiscoveryActor.State, ClusterDiscoveryActor.Data] {
 
-  import Mockito.{when, verify}
   import ClusterDiscoveryActor._
+  import Mockito.when
 
   val selfAddress = Address("akka", "testsystem")
 

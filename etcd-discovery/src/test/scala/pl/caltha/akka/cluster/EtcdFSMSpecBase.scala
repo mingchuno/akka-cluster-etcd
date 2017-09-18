@@ -1,26 +1,16 @@
 package pl.caltha.akka.cluster
 
-import scala.concurrent.duration.DurationInt
-
-import org.mockito.Mockito
-import org.scalatest.BeforeAndAfterAll
-import org.scalatest.Finders
-import org.scalatest.FlatSpecLike
-import org.scalatest.Matchers
+import akka.actor.ActorSystem
+import akka.actor.FSM.{CurrentState, Transition}
+import akka.testkit.{TestKit, TestProbe}
+import me.maciejb.etcd.client.EtcdClient
+import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
 import org.scalatest.mock.MockitoSugar
 
-import akka.actor.ActorSystem
-import akka.actor.FSM.CurrentState
-import akka.actor.FSM.Transition
-import akka.testkit.TestKit
-import akka.testkit.TestProbe
-
-import me.maciejb.etcd.client.EtcdClient
+import scala.concurrent.duration.DurationInt
 
 abstract class EtcdFSMSpecBase[State, Data](_system: ActorSystem)
     extends TestKit(_system) with FlatSpecLike with BeforeAndAfterAll with Matchers with MockitoSugar {
-
-  import Mockito.{when, verify}
 
   def this() =
     this(ActorSystem("testsystem"))

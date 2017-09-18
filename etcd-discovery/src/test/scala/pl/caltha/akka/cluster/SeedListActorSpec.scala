@@ -15,7 +15,7 @@ import me.maciejb.etcd.client.EtcdResponse
 class SeedListActorSpec extends EtcdFSMSpecBase[SeedListActor.State, SeedListActor.Data] {
 
   import SeedListActor._
-  import Mockito.{when}
+  import Mockito.when
 
   trait Fixture extends FixtureBase {
 
