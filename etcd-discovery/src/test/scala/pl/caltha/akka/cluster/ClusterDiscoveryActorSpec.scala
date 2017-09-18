@@ -24,9 +24,7 @@ import akka.testkit.TestProbe
 import me.maciejb.etcd.client.EtcdClient
 import me.maciejb.etcd.client.EtcdNode
 import me.maciejb.etcd.client.EtcdResponse
-import me.maciejb.etcd.client.EtcdException
 import me.maciejb.etcd.client.EtcdError
-import me.maciejb.etcd.client.EtcdCommandException
 
 class ClusterDiscoveryActorSpec extends EtcdFSMSpecBase[ClusterDiscoveryActor.State, ClusterDiscoveryActor.Data] {
 
@@ -58,8 +56,7 @@ class ClusterDiscoveryActorSpec extends EtcdFSMSpecBase[ClusterDiscoveryActor.St
         None))
 
     val initNodeExistsResp = Future.failed(
-      EtcdException(
-        EtcdError(EtcdError.NodeExist, "", "", 0)))
+      EtcdError(EtcdError.NodeExist, "", "", 0))
 
     def electionBidReq =
       etcd.compareAndSet(
@@ -77,8 +74,7 @@ class ClusterDiscoveryActorSpec extends EtcdFSMSpecBase[ClusterDiscoveryActor.St
         None))
 
     val eleectionBidFailureResp = Future.failed(
-      EtcdException(
-        EtcdError(EtcdError.NodeExist, "Node Exists", settings.leaderPath, 100)))
+      EtcdError(EtcdError.NodeExist, "Node Exists", settings.leaderPath, 100))
 
     val electionBidTransientFailureResp = Future.failed(
       new StreamTcpException("Connection failed"))

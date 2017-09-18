@@ -11,7 +11,6 @@ import akka.actor.FSM.SubscribeTransitionCallBack
 import akka.stream.StreamTcpException
 
 import me.maciejb.etcd.client.EtcdError
-import me.maciejb.etcd.client.EtcdException
 import me.maciejb.etcd.client.EtcdNode
 import me.maciejb.etcd.client.EtcdResponse
 
@@ -97,7 +96,7 @@ class LeaderEntryActorSpec extends EtcdFSMSpecBase[LeaderEntryActor.State, Leade
 
     val leaderEntryActor = init()
     expectTransitionTo(AwaitingReply)
-    refreshPromise1.failure(EtcdException(refreshIntFailureResp))
+    refreshPromise1.failure(refreshIntFailureResp)
     expectTransitionTo(Idle)
 
     expectTransitionTo(AwaitingReply)
@@ -129,7 +128,7 @@ class LeaderEntryActorSpec extends EtcdFSMSpecBase[LeaderEntryActor.State, Leade
 
     val leaderEntryActor = init()
     expectTransitionTo(AwaitingReply)
-    refreshPromise1.failure(EtcdException(refreshNotFoundResp))
+    refreshPromise1.failure(refreshNotFoundResp)
     expectTransitionTo(Idle)
 
     expectTransitionTo(AwaitingReply)
@@ -150,7 +149,7 @@ class LeaderEntryActorSpec extends EtcdFSMSpecBase[LeaderEntryActor.State, Leade
 
     val leaderEntryActor = init()
     expectTransitionTo(AwaitingReply)
-    refreshPromise1.failure(EtcdException(refreshCompareFailedResp))
+    refreshPromise1.failure(refreshCompareFailedResp)
     expectTransitionTo(Idle)
 
     expectTransitionTo(AwaitingReply)

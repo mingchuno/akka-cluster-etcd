@@ -6,7 +6,6 @@ import akka.actor.Status
 import akka.pattern.pipe
 import me.maciejb.etcd.client.EtcdClient
 import me.maciejb.etcd.client.EtcdError
-import me.maciejb.etcd.client.EtcdException
 import me.maciejb.etcd.client.EtcdResponse
 
 /**
@@ -39,9 +38,7 @@ class LeaderEntryActor(
       value     = address,
       ttl       = Some(settings.leaderEntryTTL.toSeconds.asInstanceOf[Int]),
       prevValue = Some(address),
-      prevExist = Some(true)).recover {
-        case ex: EtcdException ⇒ ex.error
-      }.pipeTo(self)
+      prevExist = Some(true)).pipeTo(self)
 
   /**
     * Create the leader entry, assuming it does not exist.
@@ -55,9 +52,7 @@ class LeaderEntryActor(
       key       = settings.leaderPath,
       value     = address,
       ttl       = Some(settings.leaderEntryTTL.toSeconds.asInstanceOf[Int]),
-      prevExist = Some(false)).recover {
-        case ex: EtcdException ⇒ ex.error
-      }.pipeTo(self)
+      prevExist = Some(false)).pipeTo(self)
 
   when(Idle) {
     case Event(StateTimeout, Data(assumeEntryExists)) ⇒

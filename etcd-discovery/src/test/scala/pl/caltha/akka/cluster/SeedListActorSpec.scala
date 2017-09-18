@@ -9,7 +9,6 @@ import akka.actor.FSM.SubscribeTransitionCallBack
 import akka.actor.actorRef2Scala
 
 import me.maciejb.etcd.client.EtcdError
-import me.maciejb.etcd.client.EtcdException
 import me.maciejb.etcd.client.EtcdNode
 import me.maciejb.etcd.client.EtcdResponse
 
@@ -91,7 +90,7 @@ class SeedListActorSpec extends EtcdFSMSpecBase[SeedListActor.State, SeedListAct
       createResp(132, addr2)
 
     val failure =
-      EtcdException(EtcdError(EtcdError.RaftInternal, "", "", 100))
+      EtcdError(EtcdError.RaftInternal, "", "", 100)
   }
 
   "seed list manager actor" should "proceed to AwaitCommand when seed lists are empty" in new Fixture {

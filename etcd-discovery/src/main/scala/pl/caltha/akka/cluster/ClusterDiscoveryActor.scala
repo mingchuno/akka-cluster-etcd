@@ -18,7 +18,6 @@ import akka.pattern.pipe
 
 import me.maciejb.etcd.client.EtcdClient
 import me.maciejb.etcd.client.EtcdError
-import me.maciejb.etcd.client.EtcdException
 import me.maciejb.etcd.client.EtcdNode
 import me.maciejb.etcd.client.EtcdResponse
 import akka.cluster.ClusterEvent._
@@ -33,9 +32,7 @@ class ClusterDiscoveryActor(
   private implicit val executor = context.system.dispatcher
 
   def etcd(operation: EtcdClient ⇒ Future[EtcdResponse]) =
-    operation(etcdClient).recover {
-      case ex: EtcdException ⇒ ex.error
-    }.pipeTo(self)
+    operation(etcdClient).pipeTo(self)
 
   val seedList = context.actorOf(SeedListActor.props(etcdClient, settings))
 

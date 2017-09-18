@@ -1,4 +1,4 @@
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.11"
 
 import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 
@@ -11,16 +11,16 @@ val scalariformPrefs = {
 }
 
 lazy val commonSettings = Seq(
-    version := "0.1.0",
+    version := "0.3.0",
     organization := "pl.caltha",
-    scalaVersion := "2.11.7",
+    scalaVersion := "2.11.11",
     ScalariformKeys.preferences := scalariformPrefs
 )
 
-val akkaVersion = "2.4.2"
-val etcdClientVersion = "0.0.2"
-val scalaTestVersion = "2.2.5"
-val mocitoVersion = "1.10.19"
+val akkaVersion = "2.5.4"
+val etcdClientVersion = "0.2.0"
+val scalaTestVersion = "3.0.4"
+val mocitoVersion = "2.10.0"
 
 import com.typesafe.sbt.SbtMultiJvm
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
